@@ -10,9 +10,10 @@ import { AwsModule } from 'src/lib/aws/aws.module';
 import { AppGateway } from './app.gateway';
 import { CustomerModule } from './customer/customer.module';
 import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-transport'
+import { RedisCacheModule } from './redis-cache/redis-cache.module';
 @Module({
   imports: [
-    // PrometheusModule.register(),
+    PrometheusModule.register(),
     NatsStreamingTransport.register(
       {
        clientId: 'user-service-publisher',
@@ -50,6 +51,7 @@ import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-tr
     TerminusModule,
     AwsModule,
     CustomerModule,
+    RedisCacheModule
   ],
   controllers: [HealthController],
   providers: [AppGateway],
