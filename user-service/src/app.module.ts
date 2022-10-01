@@ -9,9 +9,19 @@ import { TerminusModule } from '@nestjs/terminus';
 import { AwsModule } from 'src/lib/aws/aws.module';
 import { AppGateway } from './app.gateway';
 import { CustomerModule } from './customer/customer.module';
+import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-transport'
 @Module({
   imports: [
-    PrometheusModule.register(),
+    // PrometheusModule.register(),
+    NatsStreamingTransport.register(
+      {
+       clientId: 'user-service-publisher',
+       clusterId: 'my-cluster',
+       connectOptions: {
+         url: 'http://127.0.0.1:4222',
+       },
+     }
+    ),
     ConfigModule.forRoot({
       envFilePath: `env/${process.env.NODE_ENV || 'local'}.env`,
     }),
@@ -22,20 +32,20 @@ import { CustomerModule } from './customer/customer.module';
       inject: [ConfigService],
 
       // eslint-disable-next-line prettier/prettier
-      useFactory: async (configService: ConfigService) => 
-        ({
-          type: configService.get<string>('TYPEORM_DATABASE_TYPE'),
-          host: configService.get<string>('TYPEORM_DATABASE_HOST'),
-          port: Number(configService.get<string>('TYPEORM_DATABASE_PORT')),
-          username: configService.get<string>('TYPEORM_DATABASE_USERNAME'),
-          password: configService.get<string>('TYPEORM_DATABASE_PASSWORD'),
-          database: configService.get<string>('TYPEORM_DATABASE_NAME'),
-          entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          synchronize: false,
-          logging: false,
-          useUTC: false,
-          uuidExtension: 'uuid-ossp',
-        } as TypeOrmModuleOptions),
+      useFactory: async (configService: ConfigService) =>
+      ({
+        type: configService.get<string>('TYPEORM_DATABASE_TYPE'),
+        host: configService.get<string>('TYPEORM_DATABASE_HOST'),
+        port: Number(configService.get<string>('TYPEORM_DATABASE_PORT')),
+        username: configService.get<string>('TYPEORM_DATABASE_USERNAME'),
+        password: configService.get<string>('TYPEORM_DATABASE_PASSWORD'),
+        database: configService.get<string>('TYPEORM_DATABASE_NAME'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: false,
+        logging: false,
+        useUTC: false,
+        uuidExtension: 'uuid-ossp',
+      } as TypeOrmModuleOptions),
     }),
     TerminusModule,
     AwsModule,
@@ -44,4 +54,4 @@ import { CustomerModule } from './customer/customer.module';
   controllers: [HealthController],
   providers: [AppGateway],
 })
-export class AppModule {}
+export class AppModule { }
