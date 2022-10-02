@@ -8,10 +8,10 @@ import { CustomerService } from './customer.service';
   imports: [TypeOrmModule.forFeature([]),
   NatsStreamingTransport.register(
     {
-     clientId: 'user-service-publisher',
-     clusterId: 'my-cluster',
+     clientId: process.env.NATS_CLIENT_ID,
+     clusterId: process.env.NATS_CLUSTER_ID,
      connectOptions: {
-       url: 'http://127.0.0.1:4222',
+       url: process.env.NATS_URL,
      },
    }
   ),

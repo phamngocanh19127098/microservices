@@ -15,6 +15,15 @@ import { CustomerController } from './customer/customer.controller';
 @Module({
   imports: [
     PrometheusModule.register(),
+    NatsStreamingTransport.register(
+      {
+        clientId: process.env.NATS_CLIENT_ID,
+        clusterId: process.env.NATS_CLUSTER_ID,
+        connectOptions: {
+          url: process.env.NATS_URL,
+        },
+      }
+    ),
     ConfigModule.forRoot({
       envFilePath: `env/${process.env.NODE_ENV || 'local'}.env`,
     }),
