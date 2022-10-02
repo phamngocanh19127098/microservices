@@ -13,15 +13,6 @@ import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-tr
 @Module({
   imports: [
     // PrometheusModule.register(),
-    NatsStreamingTransport.register(
-      {
-       clientId: 'user-service-publisher',
-       clusterId: 'my-cluster',
-       connectOptions: {
-         url: 'http://127.0.0.1:4222',
-       },
-     }
-    ),
     ConfigModule.forRoot({
       envFilePath: `env/${process.env.NODE_ENV || 'local'}.env`,
     }),
@@ -49,6 +40,15 @@ import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-tr
     }),
     TerminusModule,
     AwsModule,
+    NatsStreamingTransport.register(
+      {
+       clientId: 'user-service-publisher',
+       clusterId: 'my-cluster',
+       connectOptions: {
+         url: 'http://127.0.0.1:4222',
+       },
+     }
+    ),
     CustomerModule,
   ],
   controllers: [HealthController],
