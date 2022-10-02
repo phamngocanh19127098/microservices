@@ -13,13 +13,13 @@ async function bootstrap() {
   const options: CustomStrategy = {
     strategy: new Listener(
       'my-cluster' /* clusterID */,
-      'user-service-listener' /* clientID */,
-      'user-service-group', /* queueGroupName */
+      'entity-service-listener' /* clientID */,
+      'entity-service-group', /* queueGroupName */
       {
         url: 'http://127.0.0.1:4222'
       } /* TransportConnectOptions */,
       {
-        durableName: 'user-queue-group',
+        durableName: 'entity-queue-group',
         manualAckMode: true,
         deliverAllAvailable: true,
       } /* TransportSubscriptionOptions */ ,
@@ -48,7 +48,7 @@ async function bootstrap() {
   });
 
   SwaggerModule.setup('/', app, null , {
-    swaggerUrl: `http://localhost:8888/api/docs/swagger.json`,
+    swaggerUrl: `http://localhost:3000/api/docs/swagger.json`,
     explorer: true,
     swaggerOptions: {
       docExpansion: 'list',
@@ -58,7 +58,7 @@ async function bootstrap() {
   });
 
   app.enableShutdownHooks();
-  const port = 8888;
+  const port = 3000;
   let nodeAppInstance = 0;
   if (process.env.NODE_APP_INSTANCE) {
     nodeAppInstance = Number(process.env.NODE_APP_INSTANCE);

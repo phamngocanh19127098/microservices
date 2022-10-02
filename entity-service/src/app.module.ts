@@ -1,4 +1,4 @@
-import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
@@ -10,11 +10,18 @@ import { AwsModule } from 'src/lib/aws/aws.module';
 import { AppGateway } from './app.gateway';
 import { CustomerModule } from './customer/customer.module';
 import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-transport'
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { CustomerController } from './customer/customer.controller';
 @Module({
   imports: [
-    PrometheusModule.register(),
+    // PrometheusModule.register(),
+    NatsStreamingTransport.register(
+      {
+       clientId: 'user-service-publisher',
+       clusterId: 'my-cluster',
+       connectOptions: {
+         url: 'http://127.0.0.1:4222',
+       },
+     }
+    ),
     ConfigModule.forRoot({
       envFilePath: `env/${process.env.NODE_ENV || 'local'}.env`,
     }),
@@ -43,16 +50,8 @@ import { CustomerController } from './customer/customer.controller';
     TerminusModule,
     AwsModule,
     CustomerModule,
-    CacheModule.register({
-      isGlobal: true,
-    }),
   ],
-  controllers: [],
-  providers: [
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    },
-  ],
+  controllers: [HealthController],
+  providers: [AppGateway],
 })
 export class AppModule { }
