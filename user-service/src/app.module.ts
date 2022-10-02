@@ -47,8 +47,9 @@ import { CustomerController } from './customer/customer.controller';
       isGlobal: true,
     }),
   ],
-  controllers: [],
+  controllers: [HealthController],
   providers: [
+    AppGateway,
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
