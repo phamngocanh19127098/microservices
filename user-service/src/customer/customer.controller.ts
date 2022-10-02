@@ -16,4 +16,8 @@ export class CustomerController {
         return await this.customerService.getHello()
     }
 
+    @Get('/get-id')
+    async getId(){
+        return await this.customerService.getId();
+    }
 }

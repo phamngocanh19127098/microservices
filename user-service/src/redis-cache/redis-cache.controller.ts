@@ -1,9 +1,9 @@
 import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ConfigService } from 'aws-sdk';
 import { RedisCacheService } from './redis-cache.service';
 
-@Controller('redis-cache')
+@ApiTags('api/v1/redis-cache')
+@Controller('api/v1/redis-cache')
 export class RedisCacheController {
     constructor(
         private redisCacheService: RedisCacheService
@@ -11,8 +11,6 @@ export class RedisCacheController {
 
     // @Get('/:key')
     // test(@Param('key') key){
-    //     console.log(process.env.REDIST_PORT);
-        
     //     return this.redisCacheService.get(key)
     // }
 

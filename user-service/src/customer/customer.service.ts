@@ -7,8 +7,8 @@ import { RedisCacheService } from 'src/redis-cache/redis-cache.service';
 @Injectable()
 export class CustomerService {
     constructor(
-        private publisher: Publisher,
-        private redisCacheService: RedisCacheService,
+        private readonly publisher : Publisher,
+        private readonly redisCacheService : RedisCacheService
     ) { }
 
     async getHello(): Promise<string> {
@@ -19,4 +19,11 @@ export class CustomerService {
         await this.redisCacheService.set("id", event.id);
         return `published message: ${JSON.stringify(event)}`
     }
+
+    async getId(): Promise<any> {
+        let id = await this.redisCacheService.get('id');
+        return {
+            id: id,
+        }
+    } 
 }
