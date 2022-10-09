@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: user-auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-auth
+  template:
+    metadata:
+      labels:
+        app: user-auth
+    spec:
+      containers:
+        - name: user-auth
+          image: 19127098/user-auth:0
+          imagePullPolicy: Always
+          resources:
+
+    
