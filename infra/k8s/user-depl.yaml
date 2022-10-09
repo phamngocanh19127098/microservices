@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: user-auth
-          image: 19127098/user-auth:0
-          imagePullPolicy: Always
+          image: 19127098/user-auth
+          # imagePullPolicy: Always
           resources:
 
     

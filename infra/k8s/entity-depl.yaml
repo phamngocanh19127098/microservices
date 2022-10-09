@@ -13,8 +13,8 @@ spec:
     spec:
       containers:
         - name: entity
-          image: 19127098/entity:0
-          imagePullPolicy: Always
+          image: 19127098/entity
+          # imagePullPolicy: Always
           resources:
             
     

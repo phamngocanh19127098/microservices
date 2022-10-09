@@ -50,7 +50,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document, {
+  SwaggerModule.setup('/user-auth/api', app, document, {
     swaggerOptions: {
       tagsSorter: 'alpha',
       apisSorter: 'alpha',
@@ -59,7 +59,7 @@ async function bootstrap() {
   });
 
   app.enableShutdownHooks();
-  const port = 8888;
+  const port = 3000;
   let nodeAppInstance = 0;
   if (process.env.NODE_APP_INSTANCE) {
     nodeAppInstance = Number(process.env.NODE_APP_INSTANCE);

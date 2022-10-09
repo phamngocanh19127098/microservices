@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "600m"
+    nginx.org/client-max-body-size: "600m"
+spec:
+  rules:
+    - host: local.kube
+      http:
+        paths:
+          # user api
+          - path: /api/v1/(user)/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: user-auth-srv
+                port:
+                  number: 3000
+          - path: /active-user-success
+            pathType: Prefix
+            backend:
+              service:
+                name: user-auth-srv
+                port:
+                  number: 3000
+          # swagger for user-auth service
+          - path: /user-auth/api/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: user-auth-srv
+                port:
+                  number: 3000
+          # entity-service api
+          - path: /api/v1/(entity)/(hello|room|utility|mt-cost|util|mt-supplies|export|building-content|entity-user-permission|room-content|organization-user|rental-contract|deposit-contract|liquidated-contract|contract|extention-contract|housing-expense|electricity-water-information|receipt-information|notification)/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: entity-srv
+                port:
+                  number: 3000
+          # swagger for entityservice
+          - path: /entity/api/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: entity-srv
+                port:
+                  number: 3000

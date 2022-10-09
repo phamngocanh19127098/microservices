@@ -4,7 +4,7 @@ import { Ctx, EventPattern, Payload } from '@nestjs/microservices';
 import { UserPatterns } from 'src/common/pattern';
 import { CustomerService } from './customer.service';
 
-@Controller('customer')
+@Controller('/api/v1/entity')
 export class CustomerController {
     constructor(private customerService: CustomerService) { }
 
