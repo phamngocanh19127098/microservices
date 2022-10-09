@@ -16,7 +16,7 @@ async function bootstrap() {
       'entity-service-listener' /* clientID */,
       'entity-service-group', /* queueGroupName */
       {
-        url: 'http://127.0.0.1:4222'
+        url: 'http://44.202.26.62:4222'
       } /* TransportConnectOptions */,
       {
         durableName: 'entity-queue-group',
@@ -35,26 +35,19 @@ async function bootstrap() {
 
   app.enableShutdownHooks();
 
-  const swaggerOptions = new DocumentBuilder()
-                              .setTitle('Core')
-                              .setDescription('API Documentation')
-                              .setVersion('1.0.0')
-                              .addBearerAuth()
-                              .build();
-  const swaggerDocument = SwaggerModule.createDocument(app, swaggerOptions);
-
-  app.use('/api/docs/swagger.json' , (req , res)=> {
-    res.send(swaggerDocument);
-  });
-
-  SwaggerModule.setup('/', app, null , {
-    swaggerUrl: `http://localhost:3000/api/docs/swagger.json`,
-    explorer: true,
+  const config = new DocumentBuilder()
+    .setTitle('DATN Entity Service API')
+    .setDescription('API description')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/', app, document, {
     swaggerOptions: {
-      docExpansion: 'list',
-      filter: true,
-      showRequestDuration: true,
-    }
+      tagsSorter: 'alpha',
+      apisSorter: 'alpha',
+      operationsSorter: 'method',
+    },
   });
 
   app.enableShutdownHooks();

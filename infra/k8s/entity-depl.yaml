@@ -1,0 +1,20 @@
+apiVersion: apps/v1 
+kind: Deployment 
+metadata:
+  name: entity-depl
+spec:
+  selector:
+    matchLabels:
+      app: entity
+  template:
+    metadata:
+      labels:
+        app: entity
+    spec:
+      containers:
+        - name: entity
+          image: 19127098/entity:0
+          imagePullPolicy: Always
+          resources:
+            
+    
