@@ -8,5 +8,5 @@ spec:
     app: user-auth   
   ports:
     - protocol: TCP
-      targetPort: 8888
-      port: 8888
+      targetPort: 3000
+      port: 3000

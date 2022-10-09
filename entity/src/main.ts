@@ -42,7 +42,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/', app, document, {
+  SwaggerModule.setup('/entity/api', app, document, {
     swaggerOptions: {
       tagsSorter: 'alpha',
       apisSorter: 'alpha',
