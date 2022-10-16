@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import * as jwt from 'jsonwebtoken';
+import { validateToken } from '@us-tickets/common'
 // import { AppUser } from 'src/app-user/app-user.entity';
 import { getRepository } from 'typeorm';
 
@@ -19,7 +19,7 @@ export class RolesGuard implements CanActivate {
     if (!request.headers.authorization) {
       throw new UnauthorizedException();
     }
-    request.token = await this.validateToken(request.headers.authorization);
+    request.token = await validateToken(request.headers.authorization, process.env.JWT_SECRET);
     const userRoles: string[] = request.token.role;
 
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
@@ -47,22 +47,22 @@ export class RolesGuard implements CanActivate {
     return true;
   }
 
-  async validateToken(auth: string) {
-    if (auth.split(' ')[0] !== 'Bearer') {
-      throw new UnauthorizedException('Invalid token');
-    }
-    const token = auth.split(' ')[1];
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      return decoded;
-    } catch (error) {
-      if (error.name == 'TokenExpiredError') {
-        throw new UnauthorizedException(error.name);
-      }
-      const message = 'Token error: ' + (error.message || error.name);
-      throw new UnauthorizedException(message);
-    }
-  }
+  // async validateToken(auth: string) {
+  //   if (auth.split(' ')[0] !== 'Bearer') {
+  //     throw new UnauthorizedException('Invalid token');
+  //   }
+  //   const token = auth.split(' ')[1];
+  //   try {
+  //     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  //     return decoded;
+  //   } catch (error) {
+  //     if (error.name == 'TokenExpiredError') {
+  //       throw new UnauthorizedException(error.name);
+  //     }
+  //     const message = 'Token error: ' + (error.message || error.name);
+  //     throw new UnauthorizedException(message);
+  //   }
+  // }
 
   findCommonElement(array1, array2): boolean {
     // Loop for array1
