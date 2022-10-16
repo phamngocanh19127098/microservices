@@ -16,7 +16,7 @@ async function bootstrap() {
       'user-service-listener' /* clientID */,
       'user-service-group', /* queueGroupName */
       {
-        url: `http://44.202.26.62:4222`
+        url: `http://100.26.100.60:4222`
       } /* TransportConnectOptions */,
       {
         durableName: 'user-queue-group',
