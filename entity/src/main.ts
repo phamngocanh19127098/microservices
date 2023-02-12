@@ -12,11 +12,11 @@ async function bootstrap() {
   const logger = new Logger('bootstrap');
   const options: CustomStrategy = {
     strategy: new Listener(
-      'my-cluster' /* clusterID */,
+      process.env.NATS_CLUSTER /* clusterID */,
       'entity-service-listener' /* clientID */,
       'entity-service-group', /* queueGroupName */
       {
-        url: 'http://100.26.100.60:4222'
+        url: process.env.NATS_HOST
       } /* TransportConnectOptions */,
       {
         durableName: 'entity-queue-group',

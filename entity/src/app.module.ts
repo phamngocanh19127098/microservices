@@ -43,10 +43,10 @@ import { NatsStreamingTransport } from '@nestjs-plugins/nestjs-nats-streaming-tr
     NatsStreamingTransport.register(
       {
        clientId: process.env.NATS_CLIENT_ID,
-       clusterId: process.env.NATS_CLUSTER_ID,
+       clusterId: process.env.NATS_CLUSTER,
        connectOptions: {
-         url: process.env.NATS_URL,
-       },
+        url: process.env.NATS_HOST,
+      },
      }
     ),
     CustomerModule,
