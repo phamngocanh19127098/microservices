@@ -10,9 +10,9 @@ import { CustomerService } from './customer.service';
   NatsStreamingTransport.register(
     {
       clientId: process.env.NATS_CLIENT_ID,
-      clusterId: process.env.NATS_CLUSTER_ID,
-      connectOptions: {
-        url: process.env.NATS_URL,
+      clusterId: process.env.NATS_CLUSTER,
+       connectOptions: {
+        url: process.env.NATS_HOST,
       },
     }
   ),

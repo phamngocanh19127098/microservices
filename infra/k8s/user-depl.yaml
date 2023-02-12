@@ -17,5 +17,16 @@ spec:
           image: 19127098/user-auth
           # imagePullPolicy: Always
           resources:
-
-    
+---
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: user-auth-srv
+spec:
+  type: LoadBalancer
+  selector: 
+    app: user-auth   
+  ports:
+    - protocol: TCP
+      targetPort: 3000
+      port: 3000
